@@ -1,0 +1,107 @@
+body {
+    overflow: hidden;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.floor {
+    position: absolute;
+    z-index: 6;
+    bottom: 0px;
+    width: 100%;
+    height: 100px;
+    background: url(/img/parallaxScrolling/0.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 30s linear infinite;
+    -webkit-animation: parallaxScrolling 30s linear infinite;
+}
+
+.path {
+    position: absolute;
+    z-index: 5;
+    bottom: 23px;
+    width: 100%;
+    height: 200px;
+    background: url(/img/parallaxScrolling/1.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 35s linear infinite;
+    -webkit-animation: parallaxScrolling 35s linear infinite;
+}
+
+.bigRocks {
+    position: absolute;
+    z-index: 4;
+    bottom: 150px;
+    width: 100%;
+    height: 220px;
+    background: url(/img/parallaxScrolling/2.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 40s linear infinite;
+    -webkit-animation: parallaxScrolling 40s linear infinite;
+}
+
+.tree {
+    position: absolute;
+    z-index: 3;
+    bottom: 180px;
+    width: 100%;
+    height: 360px;
+    background: url(/img/parallaxScrolling/3.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 50s linear infinite;
+    -webkit-animation: parallaxScrolling 50s linear infinite;
+}
+
+.plains{
+    position: absolute;
+    z-index: 2;
+    bottom: 200px;
+    width: 100%;
+    height: 290px;
+    background: url(/img/parallaxScrolling/4.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 60s linear infinite;
+    -webkit-animation: parallaxScrolling 60s linear infinite;
+}
+
+.distantPlains{
+    position: absolute;
+    z-index: 1;
+    bottom: 200px;
+    width: 100%;
+    height: 300px;
+    background: url(/img/parallaxScrolling/5.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 65s linear infinite;
+    -webkit-animation: parallaxScrolling 65s linear infinite;
+}
+
+.sky{
+    position: absolute;
+    z-index: -1;
+    bottom: 300px;
+    width: 100%;
+    height: 400px;
+    background: url(/img/parallaxScrolling/6.png) repeat-x;
+    background-size: cover;
+    animation: parallaxScrolling 70s linear infinite;
+    -webkit-animation: parallaxScrolling 70s linear infinite;
+}
+
+@keyframes parallaxScrolling  {
+    0% {
+        background-position: 5000PX
+    }
+
+    100% {
+        background-position: 0
+    }
+}
+
+
