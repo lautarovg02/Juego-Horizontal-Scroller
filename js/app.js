@@ -4,7 +4,6 @@ let in_game = false;
 let gentleman = null;
 let enemy = null;
 
-
 /**
  * Chequear estado del runner y de los enemigos
  */
@@ -31,7 +30,6 @@ function renderizar() {}
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "ArrowUp" || event.key === "w") {
-        console.log("saltaaa");
         gentleman.jumping();
     }
 });

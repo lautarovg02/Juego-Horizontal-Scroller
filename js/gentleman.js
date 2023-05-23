@@ -33,22 +33,22 @@ class GentleMan extends Character{
             this.clean(); 
             this.character.classList.add("jump");
             this.character.addEventListener("animationend", () => {
-                this.fall();
+                this.running();
             });
         }
     }
     /**
-     * @autor Lautaro Gallo https://github.com/lautarovg02
-     * @description This method changes the character's action to fall.
-     */
-    fall(){
-        this.clean();
-        this.character.classList.add("fall");
+    //  * @autor Lautaro Gallo https://github.com/lautarovg02
+    //  * @description This method changes the character's action to fall.
+    //  */
+    // fall(){
+    //     this.clean();
+    //     this.character.classList.add("fall");
 
-        this.character.addEventListener("animationend", () => {
-            this.running();
-        });
-    }
+    //     this.character.addEventListener("animationend", () => {
+    //         this.running();
+    //     });
+    // }
 
     /** 
      * @autor Lautaro Gallo https://github.com/lautarovg02
