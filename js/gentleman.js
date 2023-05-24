@@ -37,18 +37,6 @@ class GentleMan extends Character{
             });
         }
     }
-    /**
-    //  * @autor Lautaro Gallo https://github.com/lautarovg02
-    //  * @description This method changes the character's action to fall.
-    //  */
-    // fall(){
-    //     this.clean();
-    //     this.character.classList.add("fall");
-
-    //     this.character.addEventListener("animationend", () => {
-    //         this.running();
-    //     });
-    // }
 
     /** 
      * @autor Lautaro Gallo https://github.com/lautarovg02

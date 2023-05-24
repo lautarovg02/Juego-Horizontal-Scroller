@@ -5,16 +5,30 @@ body {
 
 .container {
     position: relative;
-    width: 100%;
     height: 100vh;
     overflow: hidden;
 }
 
-.floor {
+.container,
+.floor,
+.path,
+.bigRocks,
+.tree,
+.plains,
+.distantPlains,
+.sky,
+#character {
+    width: 100%;
     position: absolute;
+}
+
+/*----------------------------------------------------------------
+    Parts of parrallax scrolling 
+----------------------------------------------------------------*/
+
+.floor {
     z-index: 7;
     bottom: 0px;
-    width: 100%;
     height: 100px;
     background: url(/img/parallaxScrolling/0.png) repeat-x;
     background-size: 2500px 100%;
@@ -23,10 +37,8 @@ body {
 }
 
 .path {
-    position: absolute;
     z-index: 5;
     bottom: 23px;
-    width: 100%;
     height: 200px;
     background: url(/img/parallaxScrolling/1.png) repeat-x;
     background-size: 2500px 100%;
@@ -35,10 +47,8 @@ body {
 }
 
 .bigRocks {
-    position: absolute;
     z-index: 4;
     bottom: 150px;
-    width: 100%;
     height: 220px;
     background: url(/img/parallaxScrolling/2.png) repeat-x;
     background-size: 2500px 100%;
@@ -47,10 +57,8 @@ body {
 }
 
 .tree {
-    position: absolute;
     z-index: 3;
     bottom: 180px;
-    width: 100%;
     height: 360px;
     background: url(/img/parallaxScrolling/3.png) repeat-x;
     background-size: 2500px 100%;
@@ -58,11 +66,9 @@ body {
     -webkit-animation: parallaxScrolling 35s linear infinite;
 }
 
-.plains{
-    position: absolute;
+.plains {
     z-index: 2;
     bottom: 200px;
-    width: 100%;
     height: 290px;
     background: url(/img/parallaxScrolling/4.png) repeat-x;
     background-size: 2500px 100%;
@@ -70,11 +76,9 @@ body {
     -webkit-animation: parallaxScrolling 45s linear infinite;
 }
 
-.distantPlains{
-    position: absolute;
+.distantPlains {
     z-index: 1;
     bottom: 200px;
-    width: 100%;
     height: 300px;
     background: url(/img/parallaxScrolling/5.png) repeat-x;
     background-size: 2500px 100%;
@@ -82,11 +86,9 @@ body {
     -webkit-animation: parallaxScrolling 55s linear infinite;
 }
 
-.sky{
-    position: absolute;
+.sky {
     z-index: -1;
     bottom: 300px;
-    width: 100%;
     height: 400px;
     background: url(/img/parallaxScrolling/6.png) repeat-x;
     background-size: 2500px 100%;
@@ -94,57 +96,52 @@ body {
     -webkit-animation: parallaxScrolling 65s linear infinite;
 }
 
-#character{
+/*----------------------------------------------------------------
+    Character and their animations
+----------------------------------------------------------------*/
+
+#character {
     z-index: 6;
     height: 277px;
     width: 100px;
     bottom: 30px;
-    position: absolute;
     left: 200px;
-    background: url(/img/spriteSheet/spritesheet_run_1x.png) repeat-x ;
+    background: url(/img/spriteSheet/spritesheet_run_1x.png) repeat-x;
     background-size: 1080px 220px;
 }
 
-.run{
-    animation: run  .8s steps(8) infinite;
+.run {
+    animation: run .8s steps(8) infinite;
 }
 
-.jump{
+.jump {
     animation: jumping 400ms linear;
 }
-/* 
-.fall{
-    animation:  fall 200ms  linear;
-} */
+
 
 @keyframes jumping {
-    0%{
+    0% {
         bottom: 30px;
     }
-    25%{
+
+    25% {
         bottom: 50px;
     }
-    50%{
+
+    50% {
         bottom: 70px;
     }
-    75%{
+
+    75% {
         bottom: 50px;
     }
-    100%{
+
+    100% {
         bottom: 30px;
     }
 }
 
-/* @keyframes fall {
-    from {
-        bottom: 80px;
-    }
-    to {
-        bottom: 30px;
-    }
-} */
-
-@keyframes run{
+@keyframes run {
     0% {
         background-position: 0
     }
@@ -154,7 +151,11 @@ body {
     }
 }
 
-@keyframes parallaxScrolling  {
+/*----------------------------------------------------------------
+    Animation for parallax scrolling
+----------------------------------------------------------------*/
+
+@keyframes parallaxScrolling {
     0% {
         background-position: 5000PX
     }
@@ -163,8 +164,3 @@ body {
         background-position: 0
     }
 }
-
-
-
-
-
