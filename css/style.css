@@ -32,7 +32,6 @@ body {
     background: url(/img/parallaxScrolling/0.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 20s linear infinite;
-    -webkit-animation: parallaxScrolling 20s linear infinite;
 }
 
 .path {
@@ -42,7 +41,6 @@ body {
     background: url(/img/parallaxScrolling/1.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 25s linear infinite;
-    -webkit-animation: parallaxScrolling 25s linear infinite;
 }
 
 .bigRocks {
@@ -52,7 +50,6 @@ body {
     background: url(/img/parallaxScrolling/2.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 30s linear infinite;
-    -webkit-animation: parallaxScrolling 30s linear infinite;
 }
 
 .tree {
@@ -62,7 +59,6 @@ body {
     background: url(/img/parallaxScrolling/3.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 35s linear infinite;
-    -webkit-animation: parallaxScrolling 35s linear infinite;
 }
 
 .plains {
@@ -72,7 +68,6 @@ body {
     background: url(/img/parallaxScrolling/4.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 45s linear infinite;
-    -webkit-animation: parallaxScrolling 45s linear infinite;
 }
 
 .distantPlains {
@@ -82,7 +77,6 @@ body {
     background: url(/img/parallaxScrolling/5.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 55s linear infinite;
-    -webkit-animation: parallaxScrolling 55s linear infinite;
 }
 
 .sky {
@@ -92,7 +86,6 @@ body {
     background: url(/img/parallaxScrolling/6.png) repeat-x;
     background-size: 2500px 100%;
     animation: parallaxScrolling 65s linear infinite;
-    -webkit-animation: parallaxScrolling 65s linear infinite;
 }
 
 /*----------------------------------------------------------------
@@ -117,9 +110,9 @@ body {
 
 .enemy {
     z-index: 6;
-    height: 147px;
+    height: 140px;
     width: 100px;
-    bottom: 28px;
+    bottom: 30px;
     left: 80%;
     background: url(/img/spriteSheet/spritesheet_enemy_run.png) repeat-x;
     background-size: 900px 90px;
@@ -134,22 +127,29 @@ body {
     animation: run .8s steps(8) infinite;
 }
 
+.crouch{
+    background: url(/img/spriteSheet/spritesheet_gentlman_crouch.png) repeat-x;
+    animation: crouched .6s steps(6) ;
+    -webkit-animation: crouched .6s steps(6) ;
+}
+
 .jump {
     animation: jumping 600ms linear;
     -webkit-animation: jumping 600ms linear;
 }
 
 
-@keyframes moveEnemyBox {
-
-    /* 0% {
-        left: calc(100% - 100px);
+@keyframes crouched {
+    0% {
+        background-position: 0
     }
 
     100% {
-        left: 0;    
-    } */
+        background-position: -816px
+    }
+}
 
+@keyframes moveEnemyBox {
     from {
         left: 100%;
     }

@@ -13,12 +13,10 @@ class Enemy extends Character{
     }
 
     status() {
-        //*returns a DOMRect Object that provides information about the size of an element and its position relative to the viewport.
-        this.monster.getBoundingClientRect();
+        return this.monster.getBoundingClientRect();
     }
 
     /**
-     * @autor Lautaro Gallo https://github.com/lautarovg02
      * @description This method changes the character's action to walking.
      */
     walking(){
@@ -30,7 +28,6 @@ class Enemy extends Character{
     }
 
     /** 
-     * @autor Lautaro Gallo https://github.com/lautarovg02
      * @description This method removes all classes that contain actions for the character.
     */
     clean(){

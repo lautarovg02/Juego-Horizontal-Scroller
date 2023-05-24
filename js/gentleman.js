@@ -13,7 +13,7 @@ class GentleMan extends Character{
 
     status() {
         //*returns a DOMRect Object that provides information about the size of an element and its position relative to the viewport.
-        this.character.getBoundingClientRect();
+        return this.character.getBoundingClientRect();
     }
     /**
      * @autor Lautaro Gallo https://github.com/lautarovg02
