@@ -127,11 +127,6 @@ body {
     animation: run .8s steps(8) infinite;
 }
 
-.crouch{
-    background: url(/img/spriteSheet/spritesheet_gentlman_crouch.png) repeat-x;
-    animation: crouched .6s steps(6) ;
-    -webkit-animation: crouched .6s steps(6) ;
-}
 
 .jump {
     animation: jumping 600ms linear;
@@ -139,15 +134,7 @@ body {
 }
 
 
-@keyframes crouched {
-    0% {
-        background-position: 0
-    }
 
-    100% {
-        background-position: -816px
-    }
-}
 
 @keyframes moveEnemyBox {
     from {

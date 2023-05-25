@@ -1,4 +1,5 @@
 "use strict";
+
 // * -----------------------------
 // * The principal body of the proyect.
 // * -----------------------------
@@ -58,8 +59,6 @@ function updateStatus() {
 function toRender() {}
 
 function checkCollision() {
-    // const rect1 = divCharacter.getBoundingClientRect();
-    // const rect2 = document.querySelector(".enemy").getBoundingClientRect();
     let a = gentleman.status();
     let b = enemy.status();
     let a_pos = {
@@ -78,7 +77,6 @@ function checkCollision() {
         a_pos.l  > b_pos.r ||
         a_pos.b  < b_pos.t ||
         a_pos.t  > b_pos.b)) {
-        console.log("Colicion detected");
     }
 }
 
