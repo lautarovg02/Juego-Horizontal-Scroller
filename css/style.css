@@ -89,8 +89,16 @@ body {
 }
 
 /*----------------------------------------------------------------
-    Characters and their animations
+    Characters and artifacts that interact with the character
 ----------------------------------------------------------------*/
+
+.life{
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    left: 25px;
+    z-index: 7;
+}
 
 #character,
 .enemy {
