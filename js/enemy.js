@@ -1,4 +1,4 @@
-class Enemy extends Character{
+class Enemys extends GameObjects{
     /**
      * @constructor
      */
@@ -24,7 +24,6 @@ class Enemy extends Character{
         this.monster.addEventListener("animationend", () => {
             this.clean();
         });
-        
     }
 
     /** 

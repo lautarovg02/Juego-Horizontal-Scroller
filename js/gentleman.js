@@ -1,4 +1,4 @@
-class GentleMan extends Character{
+class GentleMan extends GameObjects{
 
     /**
      * @constructor

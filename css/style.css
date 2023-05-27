@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair:wght@600&display=swap');
 body {
     overflow: hidden;
     margin: 0;
+    font-family: 'Playfair', serif;
 }
 
 .container {
@@ -100,6 +102,47 @@ body {
     z-index: 7;
 }
 
+.collectible{
+    position: absolute;
+    z-index: 6;
+    height: 25px;
+    width: 50px;
+    bottom: 300px;
+}
+
+.goldIngot{
+    background: url(/img/collections/Ingotgold.png) no-repeat;
+    background-size: 25px 28px;
+    animation: moveElementBox 3s linear ;
+}
+
+.silverIngot{
+    background: url(/img/collections/Ingotsilver.png) no-repeat;
+    background-size: 25px 28px;
+    animation: moveElementBox 3s linear ;
+}
+
+.chest{
+    background: url(/img/collections/chest.png) no-repeat;
+    background-size: 25px 28px;
+    animation: moveElementBox 3s linear ;
+}
+
+.points{
+    width: 120px;
+    height: 50px;
+    left: 88%;
+    margin-top: 25px;
+    z-index: 7;
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 12px;
+    position: absolute;
+    border: 3px ridge black ;
+    background-color: transparent;
+    
+}
+
 #character,
 .enemy {
     width: 100px;
@@ -118,17 +161,17 @@ body {
 
 .enemy {
     z-index: 6;
-    height: 140px;
+    height: 100px;
     width: 100px;
-    bottom: 30px;
+    bottom: 60px;
     left: 80%;
     background: url(/img/spriteSheet/spritesheet_enemy_run.png) repeat-x;
-    background-size: 900px 90px;
+    background-size: 900px 100px;
 }
 
 .walk {
-    animation: walking .8s steps(8) infinite;
-    animation: moveEnemyBox 3s linear ;
+    animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
+    -webkit-animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
 }
 
 .run {
@@ -145,6 +188,16 @@ body {
 
 
 @keyframes moveEnemyBox {
+    from {
+        left: 100%;
+    }
+
+    to {
+        left: -10%;
+    }
+}
+
+@keyframes moveElementBox {
     from {
         left: 100%;
     }
@@ -192,7 +245,7 @@ body {
     }
 
     100% {
-        background-position: -900px;
+        background-position: -880px;
     }
 }
 
