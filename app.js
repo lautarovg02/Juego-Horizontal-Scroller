@@ -10,7 +10,6 @@
 // * -----------------------------
 let gameCollectibles = [];
 let currentCollectible = null;
-let quantityCollections = 0;
 let collisionDetectedWithEnemy = false;
 let collisionDetectedWithCollectible = false;
 let mainCharacter  = null;
@@ -23,11 +22,12 @@ let sectionGame = document.getElementById("game");
 let sectionMenu = document.getElementById("menu");
 let btnPlay = document.getElementById("btn-play");
 let btnMenu = document.getElementById("btn-menu");
-let amountOfItemsCaptured = 0;
 
 // * -----------------------------
 // * Variable for user experience control.
 // * -----------------------------
+let amountOfItemsCaptured = 0;
+let quantityCollections;
 let in_game = false;
 let quantityLifes = 6;
 let lostLives = 0;
@@ -111,11 +111,22 @@ function toRender() {
             lostLives++;
             if(lostLives == quantityLifes-1){
                 gameOver();
+                restartGame();
             }
             manipulateLives(lostLives);
         }
         
     }
+}
+
+function restartGame(){
+    manipulateLives(0);
+    amountOfItemsCaptured = 0;
+    lostLives = 0;
+    didLifeChange = false;
+    didPointChange = false;
+    totalPoints = 0;
+    quantityCollections = 0;
 }
 
 /**
@@ -232,14 +243,11 @@ function fillMatrixOfLives(){
  * @description This functions handles the points system.
  */
 function manipulatingPoints() {
-    
     if(collisionDetectedWithEnemy){
-        console.log("puntos antes " + totalPoints);
         totalPoints = totalPoints - 500;
         if(totalPoints < 0 ){
             totalPoints = 0;
         }
-        console.log("puntos despues " + totalPoints);
     }else if(collisionDetectedWithCollectible && !didPointChange){
         totalPoints = totalPoints + currentCollectible.revenue;
         currentCollectible.clean(); //* when the character picks up the collectible we delete it
