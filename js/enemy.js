@@ -9,7 +9,7 @@ class Enemys extends GameObjects{
          * */
         this.monster = document.createElement("div");
         this.monster.classList.add("enemy");
-        document.querySelector(".container").appendChild(this.monster);
+        document.querySelector(".containerGame").appendChild(this.monster);
     }
 
     status() {

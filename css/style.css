@@ -2,13 +2,64 @@
 body {
     overflow: hidden;
     margin: 0;
+    color:black;
     font-family: 'Playfair', serif;
 }
 
-.container {
+span{
+    margin: 3px;
+}
+
+.disguise{
+    display: none;
+}
+
+.containerGame {
     position: relative;
     height: 100vh;
     overflow: hidden;
+}
+
+.menu{
+    height: 100vh;
+    background: linear-gradient(50deg, black, gray);
+    background-size: cover;
+}   
+
+.containerMenu{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.instructive , .playGame, .objects, .userExperience{
+    border: 2px solid black;
+    width: 450px;
+    background-color: white;
+    margin: 10px;
+    padding: 5px;
+}
+
+.userExperience button{
+    margin: 5px;
+    justify-content: center;
+}
+.playGame{
+    background: url(/img/background.jpg);
+    background-size: cover;
+}
+.playGame button {
+    margin-left: 40%;
+}
+.items{
+    border: 2px solid black;
+    margin: 10px;
+    padding: 5px;
+}
+
+.items img{
+    width: 32px;
+    height: 30px;
 }
 
 .container,

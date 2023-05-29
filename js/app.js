@@ -3,23 +3,53 @@
 // * -----------------------------
 // * The principal body of the proyect.
 // * -----------------------------
+
+
+// * -----------------------------
+// * Variables for the game control.
+// * -----------------------------
 let gameCollectibles = [];
 let currentCollectible = null;
 let quantityCollections = 0;
+let collisionDetectedWithEnemy = false;
+let collisionDetectedWithCollectible = false;
 let mainCharacter  = null;
 let enemy = null;
 const timeForEnemy = 3500;
-let quantityLifes = 6;
-let lostLives = 0;
 let lifeStates = new Array();
 let divCharacter = document.getElementById("character");
+let sectionGameOver = document.getElementById("gameOver");
+let sectionGame = document.getElementById("game");
+let sectionMenu = document.getElementById("menu");
+let btnPlay = document.getElementById("btn-play");
+let btnMenu = document.getElementById("btn-menu");
+let amountOfItemsCaptured = 0;
+
+// * -----------------------------
+// * Variable for user experience control.
+// * -----------------------------
+let in_game = false;
+let quantityLifes = 6;
+let lostLives = 0;
 let didLifeChange = false;
 let didPointChange = false;
-let collisionDetectedWithEnemy = false;
-let collisionDetectedWithCollectible = false;
-let in_game = false;
 let totalPoints = 0;
 let points = document.createElement("p");
+
+// * -----------------------------
+// * Behaviour of buttons.
+// * -----------------------------
+
+btnPlay.addEventListener("click", () => {
+    console.log("btnPlay");
+    sectionMenu.classList.add("disguise");
+    sectionGame.classList.remove("disguise");
+});
+
+btnMenu.addEventListener("click", () => {
+    sectionMenu.classList.remove("disguise");
+    sectionGameOver.classList.add("disguise");
+})
 
 // * -----------------------------
 // * Behaviour of the keys.
@@ -79,6 +109,9 @@ function toRender() {
     if(collisionDetectedWithEnemy){
         if(lostLives < quantityLifes && !didLifeChange){
             lostLives++;
+            if(lostLives == quantityLifes-1){
+                gameOver();
+            }
             manipulateLives(lostLives);
         }
         
@@ -109,6 +142,7 @@ function checkCollision() {
         };
         if (!(a_pos.r + 3 < b_pos.l || a_pos.l > b_pos.r || a_pos.b < b_pos.t ||a_pos.t > b_pos.b) ) {
             collisionDetectedWithEnemy = true;
+            amountOfItemsCaptured++;
             didPointChange = false;
         }
         else{
@@ -229,6 +263,16 @@ function manipulateLives(life) {
         didLifeChange = true;
     }
 }
+
+function gameOver(){
+    sectionGameOver.classList.remove("disguise");
+    sectionGame.classList.add("disguise");
+    sectionMenu.classList.add("disguise");
+
+    let listStats = document.getElementById("list-stats");
+    listStats.innerHTML = '<li class="list-group-item" >Puntos Totales: ' + totalPoints +'</li>';
+    listStats.innerHTML += '<li class="list-group-item" >Cantidad de items atrapados: ' + amountOfItemsCaptured +'</li>';
+}   
 
 // * -----------------------------
 // * The principal entrance of the project.

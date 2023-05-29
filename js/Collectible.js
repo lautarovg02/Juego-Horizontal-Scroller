@@ -12,7 +12,7 @@ class Collectibles  extends GameObjects {
         this.collectible = document.createElement("div");
         this.collectible.classList.add("collectible");
         // this.creationTime = time; implement in the future
-        document.querySelector(".container").appendChild(this.collectible);
+        document.querySelector(".containerGame").appendChild(this.collectible);
     }
 
     status() {
