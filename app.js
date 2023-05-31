@@ -1,61 +1,78 @@
 "use strict";
+// * -----------------------------
+// * Time control to generate objects.
+// * -----------------------------
+const minimumTimeToSpawnEnemy = 3500;
+const maximumTimeToSpawnEnemy = 7000;
+let gameTime;
+let interval;
+let intervalGame;
+let timeItemGold = 3000;
+let timeItemLives = 8000;
+let timeEnemy = 5000;
 
 // * -----------------------------
-// * The principal body of the proyect.
+// * Flags for an element to inreact only once.
 // * -----------------------------
-
-
-// * -----------------------------
-// * Variables for the game control.
-// * -----------------------------
-let gameCollectibles = [];
-let currentCollectible = null;
-let collisionDetectedWithEnemy = false;
-let collisionDetectedWithCollectible = false;
-let mainCharacter  = null;
-let enemy = null;
-const timeForEnemy = 3500;
-let lifeStates = new Array();
-let divCharacter = document.getElementById("character");
-let sectionGameOver = document.getElementById("gameOver");
-let sectionGame = document.getElementById("game");
-let sectionMenu = document.getElementById("menu");
-let btnPlay = document.getElementById("btn-play");
-let btnMenu = document.getElementById("btn-menu");
+let flagCollisonGold = false;
+let flagCollisionLive = false;
+let flagCollisionEnemy = false;
 
 // * -----------------------------
-// * Variable for user experience control.
+// * Variables for the Collectibles.
 // * -----------------------------
-let amountOfItemsCaptured = 0;
 let quantityCollections;
-let in_game = false;
+let lifeStates = new Array();
+let goldItems = [];
+let chosenGoldItem = null;
+let livesItems = [];
+let livesItemChose = null;
+
+// * -----------------------------
+// * Variables for the Main Character.
+// * -----------------------------
 let quantityLifes = 6;
 let lostLives = 0;
-let didLifeChange = false;
-let didPointChange = false;
+let collisonGold = false;
+let collisionLives = false;
+let mainCharacter = null;
+let amountOfItemsCaptured = 0;
 let totalPoints = 0;
+
+// * -----------------------------
+// * Variables for the Enemy.
+// * -----------------------------
+let arrayEnemys = [];
+let enemy = null;
+let enemyDamage = 500;
+let in_game = false;
+let collisionDetectedWithEnemy = false;
+
+// * -----------------------------
+// * Html elements.
+// * -----------------------------
+let sectionGameOver = document.getElementById("gameOver");
+let sectionGame = document.getElementById("game");
+let divGameTime = document.querySelector(".gameDuration");
+let divContainerGame = document.querySelector(".containerGame");
+let divCharacter = document.getElementById("character");
+let btnPlay = document.getElementById("btn-play");
+let btnPlayAgain = document.getElementById("btn-volverAjugar");
 let points = document.createElement("p");
+let containerPoints = document.querySelector(".points");
+
 
 // * -----------------------------
 // * Behaviour of buttons.
 // * -----------------------------
-
-btnPlay.addEventListener("click", () => {
-    console.log("btnPlay");
-    sectionMenu.classList.add("disguise");
-    sectionGame.classList.remove("disguise");
-});
-
-btnMenu.addEventListener("click", () => {
-    sectionMenu.classList.remove("disguise");
-    sectionGameOver.classList.add("disguise");
-})
+btnPlay.addEventListener("click", startGame);
+btnPlayAgain.addEventListener("click",restartGame)
 
 // * -----------------------------
 // * Behaviour of the keys.
 // * -----------------------------
 document.addEventListener("keydown", (event) => {
-    if (event.key === "ArrowUp" || event.key === "w") {
+    if (event.key === "ArrowUp") {
         mainCharacter.jumping();
     }
 });
@@ -63,6 +80,115 @@ document.addEventListener("keydown", (event) => {
 // * -----------------------------
 // * Behaviour of the functions.
 // * -----------------------------
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description function in charge of handling the logic when the user starts the game.
+ */
+function startGame() {
+    gameTime = 120000;
+    intervalGame =  setInterval(() =>{
+        updateTime();
+    }, 1000);
+    fillMatrixOfLives();
+    generateCollectibles();
+    in_game = true;
+    interval = setInterval(() => { 
+        generateMonster()
+    }, timeEnemy);
+    showGame();
+    gameLoop();
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of resetting its value to its original state
+ */
+function restartGame(){
+    timeEnemy = 5000;
+    interval = setInterval(() => { 
+        generateMonster()
+    }, timeEnemy);
+    intervalGame =  setInterval(() =>{
+        updateTime();
+    }, 1000);
+    //* Removing old items
+    deleteItems();
+    deleteEnemys();
+    //* Resseting objects
+    mainCharacter = null;
+    enemy = null;
+    livesItemChose = null;
+    chosenGoldItem = null;
+
+    //* Resetting flags
+    flagCollisonGold = false;
+    flagCollisionLive = false; 
+    flagCollisionEnemy = false;
+
+    //* Resseting collisions 
+    collisonGold = false;
+    collisionLives = false;
+    collisionDetectedWithEnemy = false;
+
+    //* Resseting arrays 
+    goldItems = [];
+    livesItems = [];
+    arrayEnemys = [];
+
+    //* Resseting counter variables 
+    amountOfItemsCaptured = 0;  //* reset cant itms capturados
+    lostLives = 0;  //* reset lost Lives
+    totalPoints = 0;//* reset lost LivestotalPoints
+    quantityCollections = 0;//* reset 
+    quantityLifes = 6;
+
+    if(enemy){
+        divContainerGame.removeChild(enemy.getNode());
+    }
+
+    gameTime = 120000;//* reset 
+    in_game = true;
+    showGame();
+    fillMatrixOfLives();
+    generateCollectibles();
+    gameLoop();
+}
+
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of handling the logic when the user loses
+ */
+function gameOver(){
+    clearInterval(interval);
+    clearInterval(intervalGame);
+    showGameOver();
+    in_game = false;
+    let listStats = document.getElementById("list-stats");
+    listStats.innerHTML = '<li class="list-group-item" >Puntos Totales: ' + totalPoints +'</li>';
+    listStats.innerHTML += '<li class="list-group-item" >Cantidad de items atrapados: ' + amountOfItemsCaptured +'</li>';
+}  
+
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of showing the scenario when the user loses
+ */
+function showGameOver() {
+    sectionGameOver.classList.remove("disguise");
+    sectionGame.classList.add("disguise");
+    document.getElementById("menu").classList.add("disguise");
+}
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of displaying the scenario when the user starts the game
+ */
+function showGame(){
+    sectionGameOver.classList.add("disguise");
+    sectionGame.classList.remove("disguise");
+}
+
 /**
  * @autor Lautaro Gallo https://github.com/lautarovg02
  * @description Function in charge of checking the status of the character and enemies.
@@ -70,12 +196,13 @@ document.addEventListener("keydown", (event) => {
 function gameLoop() {
     processUserInput();
     updateStatus();
-    manipulatingPoints();
+    deleteEnemys();
     toRender();
     if (in_game) {
         requestAnimationFrame(gameLoop);
     }
 }
+
 
 /**
  * @autor Lautaro Gallo https://github.com/lautarovg02
@@ -85,12 +212,51 @@ function processUserInput() {
     if (!mainCharacter) {
         mainCharacter = new GentleMan ();
         mainCharacter.running();
-        setInterval(generateEnemy, timeForEnemy);
-        // setInterval(showCollectibles, currentCollectible.creationTime);//* Implements in the future
-        setInterval(displayOnlyACollectible, 5000);
-        setInterval(showPoints,1000)
+        setInterval(() =>{
+            getRandomItemGold();
+        }, timeItemGold);
+        setInterval(() =>{
+            getRandomItemLives();
+        }, timeItemLives);
+    } 
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of obtaining a random object from the array of gold items
+ */
+function getRandomItemGold(){
+    let itemGoldRandom = Math.floor(Math.random() *goldItems.length);
+    chosenGoldItem = null;
+    chosenGoldItem = goldItems[itemGoldRandom];
+    flagCollisonGold = false;
+    timeItemGold = chosenGoldItem.getTimeGeneration();
+    chosenGoldItem.showCollectableType();
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description function in charge of obtaining a random object from the array of lives items
+ */
+function getRandomItemLives(){
+    let itemRandom = Math.floor(Math.random() *livesItems.length);
+    livesItemChose = livesItems[itemRandom];
+    flagCollisionLive = false;
+    livesItemChose.showCollectableType();
+    timeItemLives = livesItemChose.getTimeGeneration();
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description The objective of this function is to subtract one second from the time variable and update it.
+ */
+function updateTime() {
+    gameTime = gameTime - 1000;
+    divGameTime.innerHTML = "Tiempo Restante: " + Math.floor(gameTime / 1000);
+    if (gameTime <= 0) {
+        clearInterval(intervalGame);
+        gameOver();
     }
-    in_game = true;
 }
 
 /**
@@ -98,7 +264,118 @@ function processUserInput() {
  * @description Function in charge of updating the variables and game objects.
  */
 function updateStatus() {
-    checkCollision();
+    if(enemy && !flagCollisionEnemy){
+        collisionDetectedWithEnemy =  enemy.checkCollision(mainCharacter);
+    }
+    if(chosenGoldItem && !collisonGold ){
+        collisonGold = chosenGoldItem.checkCollision(mainCharacter);
+    }
+    if(livesItemChose && !flagCollisionLive){
+        collisionLives = livesItemChose.checkCollision(mainCharacter);
+    }
+
+    if (collisionDetectedWithEnemy) {
+        if(!flagCollisionEnemy){
+            removeLives();
+            removePoints()
+        } 
+        flagCollisionEnemy = true;
+        collisionDetectedWithEnemy = false;    
+    }
+    
+    if(collisionLives){     
+        if(!flagCollisionLive){
+            addLives();
+            amountOfItemsCaptured++;
+        }
+        flagCollisionLive = true;
+        collisionLives = false;
+    }
+    if (collisonGold) {
+        if(!flagCollisonGold){
+            addPoints();
+        }
+        flagCollisonGold = true;
+        collisonGold = false;
+    }
+
+
+    if (in_game) {
+        totalPoints++;
+    }
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of adding points to the user.
+ */
+function addPoints(){
+    if(collisonGold){
+        amountOfItemsCaptured++;
+        let pointsAdditional = chosenGoldItem.getGold();
+        totalPoints = totalPoints + pointsAdditional;
+        chosenGoldItem.clean(); //* when the character picks up the collectible we delete it
+    }
+    showPoints();
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of removing points to the user.
+ */
+function removePoints(){
+    if(collisionDetectedWithEnemy){
+        if(totalPoints < enemyDamage ){
+            gameOver();
+        }else{
+            totalPoints = totalPoints - enemyDamage;
+        }
+    }
+    showPoints();
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of adding  to the user.
+ */
+function addLives(){
+    if(!flagCollisionLive){
+        let lives = livesItemChose.getLives();
+        if(lostLives != 0) {
+            lostLives = lostLives - lives;
+            if(lostLives < 0){
+                lostLives = 0;
+            }
+            let containerLife = document.querySelector(".life");
+            let src = lifeStates[lostLives].src;
+            containerLife.style.background = "url(" + src + ") no-repeat";
+            containerLife.style.backgroundSize = "200px 100px";
+        }
+        livesItemChose.clean();
+    }
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of removing  to the user.
+ */
+function removeLives(){
+    if(collisionDetectedWithEnemy){
+        if(lostLives < quantityLifes){
+            lostLives++;
+            if(lostLives == quantityLifes-1){
+                gameOver();
+            }
+            if(lostLives < 0){
+                lostLives = 0;
+            }
+            let containerLife = document.querySelector(".life");
+            let src = lifeStates[lostLives].src;
+            containerLife.style.background = "url(" + src + ") no-repeat";
+            containerLife.style.backgroundSize = "200px 100px";
+        }
+    }
+    
 }
 
 /**
@@ -106,118 +383,96 @@ function updateStatus() {
  * @description Function in charge of drawing the current stateof the game on the screen.
  */
 function toRender() {
-    if(collisionDetectedWithEnemy){
-        if(lostLives < quantityLifes && !didLifeChange){
-            lostLives++;
-            if(lostLives == quantityLifes-1){
-                gameOver();
-                restartGame();
-            }
-            manipulateLives(lostLives);
-        }
-        
-    }
+    showPoints();
 }
 
-function restartGame(){
-    manipulateLives(0);
-    amountOfItemsCaptured = 0;
-    lostLives = 0;
-    didLifeChange = false;
-    didPointChange = false;
-    totalPoints = 0;
-    quantityCollections = 0;
-}
-
-/**
- * @autor Lautaro Gallo https://github.com/lautarovg02
- * @description Function in charge of checking if two objects collide.
- */
-function checkCollision() {
-    let a = mainCharacter.status();
-
-    let a_pos = {
-        t: a.top - 20,
-        l: a.left,
-        r: a.left + a.width - 95,
-        b: a.top + a.height - 90,
-    };
-
-    if (enemy) {
-        let b = enemy.status();
-        let b_pos = {
-            t: b.top,
-            l: b.left,
-            r: b.left + b.width - 101,
-            b: b.top + b.height - 101,
-        };
-        if (!(a_pos.r + 3 < b_pos.l || a_pos.l > b_pos.r || a_pos.b < b_pos.t ||a_pos.t > b_pos.b) ) {
-            collisionDetectedWithEnemy = true;
-            amountOfItemsCaptured++;
-            didPointChange = false;
-        }
-        else{
-            collisionDetectedWithEnemy = false;
-            didLifeChange = false;
-        }
-    }
-    
-    if(currentCollectible){
-        let c = currentCollectible.status();
-        let c_pos = {
-            t: c.top,
-            l: c.left,
-            r: c.left + c.width - 12,
-            b: c.top + c.height -12,
-        };
-        if (!(a_pos.r < c_pos.l || a_pos.l > c_pos.r || a_pos.b < c_pos.t ||a_pos.t > c_pos.b) ) {
-            collisionDetectedWithCollectible = true;
-            didPointChange = false;
-        }else{
-            collisionDetectedWithCollectible = false;
-        }
-    }
-
-}
 
 /**
  * @autor Lautaro Gallo https://github.com/lautarovg02
  * @description function in charge of generating enemies
  */
-function generateEnemy() {
-    enemy = null;
-    enemy = new Enemys();
-    enemy.walking();
+function generateMonster() {
+        clearInterval(interval);
+        interval = setInterval(() =>{
+            generateMonster();
+        },timeEnemy);
+
+        timeEnemy = getRandomTime(minimumTimeToSpawnEnemy,maximumTimeToSpawnEnemy);
+        let velocity;
+        
+        if(gameTime > 30000){
+            velocity =  Math.random(5 - 2) + 2;// getRandomTime
+        }else{
+            velocity =  Math.random(5 - 1) + 1;
+        }
+        flagCollisionEnemy = false;
+        enemy = new Monster(velocity);
+        arrayEnemys.push(enemy);
 }
+
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description Function in charge of eliminating the enemies from the screen, once they have finished their journey.
+ */
+function deleteEnemys() {    
+    arrayEnemys.forEach((e,index) => {
+        const status = e.status();
+                if (status.left < 0 - status.width) {
+                    document.querySelector(".containerGame").removeChild(e.monster);
+                    arrayEnemys.splice(index, 1); // indice - cant de elementos a borrar;
+                    enemy = null; 
+                }
+    });
+}
+
+/**
+ * @autor Lautaro Gallo https://github.com/lautarovg02
+ * @description function in charge of eliminating the collectibles  items on the screen.
+ */
+function deleteItems() {  
+    goldItems.forEach((g,index) => {
+        const status = g.status();
+        document.querySelector(".containerGame").removeChild(g.collectible);
+        goldItems.splice(index, 1); // indice - cant de elementos a borrar;
+        chosenGoldItem = null; 
+    });
+
+    livesItems.forEach((l,index) => {
+        const status = l.status();
+        document.querySelector(".containerGame").removeChild(l.collectible);
+        livesItems.splice(index, 1); // indice - cant de elementos a borrar;
+        livesItemChose = null;         
+    });
+    
+}
+
+function getRandomTime(minimumTime, maximumTime) {
+    return Math.random() * (maximumTime - minimumTime) + minimumTime;
+}
+
 
 /**
  * @autor Lautaro Gallo https://github.com/lautarovg02
  * @description This function fill an array with collectibles from the game.
  */
 function generateCollectibles(){
-    let goldIngot = new Collectibles("goldIngot",500,6000);
-    let silverIngot = new Collectibles("silverIngot",250,3000);
-    let chest = new Collectibles("chest",1000,10000);
-    gameCollectibles.push(goldIngot,silverIngot,chest);
-    quantityCollections = gameCollectibles.length;
+    let goldIngot = new GoldItem("goldIngot",500,6000);
+    let silverIngot = new GoldItem("silverIngot",250,3000);
+    let chest = new GoldItem("chest",1000,10000);
+    let itemOfOneLive = new LifeItem("potionLive",1,10000);
+    let itemOfTwoLive = new LifeItem("potionLiveTwo",3,25000);
+
+    goldItems.push(goldIngot,silverIngot,chest);
+    livesItems.push(itemOfOneLive,itemOfTwoLive);
 }
 
-/**
- * @autor Lautaro Gallo https://github.com/lautarovg02
- * @description This function selects and displays a collectible.
- */
-function displayOnlyACollectible(){
-    let collectibleRandom = Math.floor(Math.random() * quantityCollections);
-    currentCollectible = gameCollectibles[collectibleRandom];
-    currentCollectible.showCollectableType(currentCollectible.name);
-}
 
 /**
  * @autor Lautaro Gallo https://github.com/lautarovg02
  * @description This function updates and displays the points.
  */
 function showPoints() {
-    let containerPoints = document.querySelector(".points");
     points.innerHTML = "Puntos: " + totalPoints;
     containerPoints.appendChild(points);
 }
@@ -236,56 +491,9 @@ function fillMatrixOfLives(){
     lifeStates[3].src = "/img/lifeProgress/life-stage-4.png";
     lifeStates[4].src = "/img/lifeProgress/life-stage-5.png";
     lifeStates[5].src = "/img/lifeProgress/life-stage-6.png";
+
+    let containerLife = document.querySelector(".life");
+    let src = lifeStates[0].src;
+    containerLife.style.background = "url(" + src + ") no-repeat";
+    containerLife.style.backgroundSize = "200px 100px";
 }
-
-/**
- * @autor Lautaro Gallo https://github.com/lautarovg02
- * @description This functions handles the points system.
- */
-function manipulatingPoints() {
-    if(collisionDetectedWithEnemy){
-        totalPoints = totalPoints - 500;
-        if(totalPoints < 0 ){
-            totalPoints = 0;
-        }
-    }else if(collisionDetectedWithCollectible && !didPointChange){
-        totalPoints = totalPoints + currentCollectible.revenue;
-        currentCollectible.clean(); //* when the character picks up the collectible we delete it
-        collisionDetectedWithCollectible = false;
-        didPointChange = true;
-    }
-    totalPoints += 1;
-}
-
-/**
- * @autor Lautaro Gallo https://github.com/lautarovg02
- * @description This function updates the state of the lives.
- */
-function manipulateLives(life) {
-    if(life < quantityLifes){
-        let containerLife = document.querySelector(".life");
-        let src = lifeStates[life].src;
-        containerLife.style.background = "url(" + src + ") no-repeat";
-        containerLife.style.backgroundSize = "200px 100px";
-        collisionDetectedWithEnemy = false;
-        didLifeChange = true;
-    }
-}
-
-function gameOver(){
-    sectionGameOver.classList.remove("disguise");
-    sectionGame.classList.add("disguise");
-    sectionMenu.classList.add("disguise");
-
-    let listStats = document.getElementById("list-stats");
-    listStats.innerHTML = '<li class="list-group-item" >Puntos Totales: ' + totalPoints +'</li>';
-    listStats.innerHTML += '<li class="list-group-item" >Cantidad de items atrapados: ' + amountOfItemsCaptured +'</li>';
-}   
-
-// * -----------------------------
-// * The principal entrance of the project.
-// * -----------------------------
-fillMatrixOfLives();
-manipulateLives(0);
-generateCollectibles();
-gameLoop();

@@ -10,9 +10,14 @@ span{
     margin: 3px;
 }
 
+
 .disguise{
     display: none;
 }
+
+/*----------------------------------------------------------------
+    Parts of section menu and section game over
+----------------------------------------------------------------*/
 
 .containerGame {
     position: relative;
@@ -62,6 +67,10 @@ span{
     height: 30px;
 }
 
+
+/*----------------------------------------------------------------
+    Parts of parrallax scrolling 
+----------------------------------------------------------------*/
 .container,
 .floor,
 .path,
@@ -73,11 +82,6 @@ span{
     width: 100%;
     position: absolute;
 }
-
-/*----------------------------------------------------------------
-    Parts of parrallax scrolling 
-----------------------------------------------------------------*/
-
 .floor {
     z-index: 7;
     bottom: 0px;
@@ -144,13 +148,36 @@ span{
 /*----------------------------------------------------------------
     Characters and artifacts that interact with the character
 ----------------------------------------------------------------*/
+.points, .life, .gameDuration{
+    position: absolute;
+    z-index: 7;
+}
 
 .life{
-    position: absolute;
     width: 200px;
     height: 100px;
-    left: 25px;
-    z-index: 7;
+    left: 2%;
+}
+
+
+.points, .gameDuration{
+    margin-top: 2%;
+    height: 55px;
+    width: 120px;
+    border: 3px ridge black ;
+    background-color: transparent;
+    text-align: center;
+    font-size: 18px;
+    padding-bottom: 12px;
+}
+
+.points{
+    left: 88%;
+}
+
+.gameDuration{
+
+    left: 50%;
 }
 
 .collectible{
@@ -179,29 +206,28 @@ span{
     animation: moveElementBox 3s linear ;
 }
 
-.points{
-    width: 120px;
-    height: 50px;
-    left: 88%;
-    margin-top: 25px;
-    z-index: 7;
-    text-align: center;
-    font-size: 18px;
-    padding-bottom: 12px;
-    position: absolute;
-    border: 3px ridge black ;
-    background-color: transparent;
-    
+.potionLive{
+    background: url(/img/collections/Potion01.png) no-repeat;
+    background-size: 25px 28px;
+    animation: moveElementBox 3s linear ;
 }
+
+.potionLiveTwo{
+    background: url(/img/collections/Potion02.png) no-repeat;
+    background-size: 25px 28px;
+    animation: moveElementBox 3s linear ;
+}
+
+
 
 #character,
 .enemy {
+    z-index: 6;
     width: 100px;
     position: absolute;
 }
 
 #character {
-    z-index: 6;
     height: 277px;
     width: 100px;
     bottom: 30px;
@@ -211,7 +237,6 @@ span{
 }
 
 .enemy {
-    z-index: 6;
     height: 100px;
     width: 100px;
     bottom: 60px;
@@ -220,10 +245,10 @@ span{
     background-size: 900px 100px;
 }
 
-.walk {
+/* .walk {
     animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
     -webkit-animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
-}
+} */
 
 .run {
     animation: run .8s steps(8) infinite;
@@ -232,7 +257,6 @@ span{
 
 .jump {
     animation: jumping 600ms linear;
-    -webkit-animation: jumping 600ms linear;
 }
 
 
@@ -244,7 +268,7 @@ span{
     }
 
     to {
-        left: -10%;
+        left: -30%;
     }
 }
 

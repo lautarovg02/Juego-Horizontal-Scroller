@@ -45,7 +45,6 @@ class GentleMan extends GameObjects{
     clean(){
         this.character.classList.remove("jump");
         this.character.classList.remove("run");
-        this.character.classList.remove("fall");
         this.character.removeEventListener("animationend", () => {}); 
     }
 }
