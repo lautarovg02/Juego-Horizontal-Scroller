@@ -14,8 +14,6 @@
 
 <body>
     <main>
-
-
         <section id="game" class="disguise">
             <div class="containerGame">
                 <div class="floor"></div>
@@ -34,29 +32,30 @@
 
         <section id="menu" class="menu">
             <h1 class="text-capitalize text-center text-decoration-underline ">El Caballero Valiente</h1>
+            
             <div class="containerMenu">
                 <div class="instructive">
                     <h2 class="text-center text-capitalize ">¿Como Jugar?</h2>
                     <p class="form-control-lg">Durante el juego usted podra recolectar objetos, y sumar puntos. A medida
                         que pasa el tiempo suma puntos tambien.
-                        Tiene que tener cuidado de no chocar contra los enemigos, sino estos le sacaran vida.
+                        Tiene que tener cuidado de no chocar contra los enemigos, sino estos le sacaran vida y puntos. Si tenes menos puntos que los que te quita el enemigo moriras.
                     </p>
-                    <h4>Control</h4>
+                    <h3>Control</h3>
                     <p>Para manejar al usuario: </p>
                     <ul class="list-group">
-                        <li class="list-group-item">Saltar con la tecla :<span class="items"><img src="/img/keyUp.jpg"
-                                    alt=""></span></li>
+                        <li class="list-group-item">Saltar con la tecla :<span class="items"><img src="/img/keyUp.jpg" alt=""></span></li>
                     </ul>
                 </div>
                 <div class="playGame">
-                    <h2 class="text-center text-capitalize ">Vamos a Jugar</h1>
-                        <button id="btn-play" type="button" class="btn btn-dark">Jugar</button>
+                    <h3 class="text-center text-capitalize ">Vamos a Jugar</h1>
+                        <button id="btn-play" type="button" class="btn btn-dark ">Jugar</button>
+                        <button  id="btn-sound-on"  class="btn btn-dark">Activar sonido</span></button>
+                        <button  id="btn-sound-off"  class="btn btn-dark disguise">Desactivar sonido</span></button>
                 </div>
                 <div class="objects">
-                    <h2 class="text-center text-capitalize ">Objetos Del Juego</h2>
-                    <h4>Recolectables</h4>
-                    <p>Existen en el juego diversos recolectables que al juntarlos le dara una bonificacion de puntos
-                    </p>
+                    <h3 class="text-center text-capitalize ">Objetos Del Juego</h3>
+                    <h5>Recolectables</h5>
+                    <p class="form-control-sm  ">Existen en el juego diversos recolectables que al juntarlos le dara una bonificacion de puntos</p>
                     <ul class="list-group">
                         <li class="list-group-item">Lingote de plata :<span class="items"><img
                                     src="/img/collections/Ingotsilver.png" alt=""></span> 250 puntos</li>
@@ -64,12 +63,14 @@
                                     src="/img/collections/Ingotgold.png" alt=""></span> 500 puntos</li>
                         <li class="list-group-item">Tesoro :<span class="items"><img src="/img/collections/chest.png"
                                     alt=""></span> 1000 puntos</li>
+                        <li class="list-group-item">Pocion Rosa :<span class="items"><img src="/img/collections/Potion01.png" alt=""></span> 1 vida </li>
+                        <li class="list-group-item">Pocion Dorada :<span class="items"><img src="/img/collections/Potion02.png" alt=""></span> 3 vidas</li>
                     </ul>
-                    <h4>Enemigos</h4>
-                    <p>Existen en el juego diversos enemogos que al chocarte con ellos te sacaran vidas </p>
+                    <h5>Enemigos</h5>
+                    <p  class="form-control-sm">Existen en el juego diversos enemogos que al chocarte con ellos te sacaran vidas </p>
                     <ul class="list-group">
                         <li class="list-group-item">Enemigo :<span class="items"><img src="/img/enemyIcon.png"
-                                    alt=""></span> 1 vida</li>
+                                    alt=""></span> 1 vida y 500 puntos</li>
                     </ul>
                 </div>
             </div>
@@ -79,6 +80,8 @@
             <h1 class="text-capitalize text-center text-decoration-underline ">Game Over</h1>
             <div class="containerMenu">
                 <div class="userExperience">
+                    <button  id="btn-sound-on"  class="btn btn-dark">Activar sonido</span></button>
+                    <button  id="btn-sound-off"  class="btn btn-dark disguise">Desactivar sonido</span></button>
                     <button id="btn-volverAjugar" type="button" class="btn btn-dark">Volver a Jugar</button>
                     <ul class="list-group" id="list-stats">
 
@@ -95,6 +98,7 @@
 <script src="js/Collectible.js"></script>
 <script src="js/GoldItem.js"></script>
 <script src="js/LifeItem.js"></script>
+<script src="js/Music.js"></script>
 <script src="app.js"></script>
 
 

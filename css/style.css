@@ -45,6 +45,7 @@ span{
     padding: 5px;
 }
 
+
 .userExperience button{
     margin: 5px;
     justify-content: center;
@@ -54,6 +55,7 @@ span{
     background-size: cover;
 }
 .playGame button {
+    margin-top: 10%;
     margin-left: 40%;
 }
 .items{
@@ -66,7 +68,6 @@ span{
     width: 32px;
     height: 30px;
 }
-
 
 /*----------------------------------------------------------------
     Parts of parrallax scrolling 
@@ -245,21 +246,18 @@ span{
     background-size: 900px 100px;
 }
 
-/* .walk {
-    animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
-    -webkit-animation: walking .8s steps(8) infinite , moveEnemyBox 3s linear ;
-} */
-
-.run {
-    animation: run .8s steps(8) infinite;
+.containerMenu p{
+    margin: 1px;
 }
-
 
 .jump {
     animation: jumping 600ms linear;
 }
 
 
+.run {
+    animation: run .8s steps(8) infinite;
+}
 
 
 @keyframes moveEnemyBox {
@@ -278,7 +276,7 @@ span{
     }
 
     to {
-        left: -10%;
+        left: -100%;
     }
 }
 
@@ -288,15 +286,15 @@ span{
     }
 
     25% {
-        bottom: 60px;
+        bottom: 80px;
     }
 
     50% {
-        bottom: 90px;
+        bottom: 130px;
     }
 
     75% {
-        bottom: 60px;
+        bottom: 80px;
     }
 
     100% {

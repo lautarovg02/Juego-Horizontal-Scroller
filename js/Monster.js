@@ -10,6 +10,7 @@ class Monster extends GameObjects{
         this.monster = document.createElement("div");
         this.monster.classList.add("enemy");
         this.velocity = velocity;
+        this.crash = false;
         this.monster.style.animation = `walking .8s steps(8) infinite, moveEnemyBox ${this.velocity}s linear`;
         document.querySelector(".containerGame").appendChild(this.monster);
     }
@@ -20,6 +21,15 @@ class Monster extends GameObjects{
 
     getNode(){
         return this.monster;
+    }
+
+    getCrash(){
+        return this.crash;
+    }
+
+    
+    setCrash(value){
+        return this.crash  = value;
     }
 
     /**
@@ -41,13 +51,8 @@ class Monster extends GameObjects{
             b: enemyChose.top + enemyChose.height - 101,
         };
 
-        // if (!(pos_character.r + 3 < pos_enemy.l || pos_character.l > pos_enemy.r || pos_character.b < pos_enemy.t ||pos_character.t > pos_enemy.b) ) {
-        //     console.log("chocooo");
-        //     return true;
-        // }
         if (pos_character.l <= pos_enemy.r && pos_character.r >= pos_enemy.l
             && pos_character.b >= pos_enemy.t && pos_character.t <= pos_enemy.b) {
-                console.log("choco")
                 return true;
             }
         else{
@@ -58,12 +63,12 @@ class Monster extends GameObjects{
     /** 
      * @description This method removes all classes that contain actions for the character.
     */
-    // clean(){
-    //     let enemyBox = document.querySelector(".enemy");
-    //     if(enemyBox){
-    //         document.querySelector(".enemy").remove();
-    //     }
-    //     this.monster.classList.remove("walk");
-    //     this.monster.removeEventListener("animationend", () => {}); 
-    // }
+    clean(){
+        let enemyBox = document.querySelectorAll(".enemy");
+        if(enemyBox){
+            document.querySelector(".enemy").remove();
+        }
+        this.monster.classList.remove("walk");
+        this.monster.removeEventListener("animationend", () => {}); 
+    }
 }
